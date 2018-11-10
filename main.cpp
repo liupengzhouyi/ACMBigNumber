@@ -469,14 +469,62 @@ int charToInt(char c) {
     return number;
 }
 
+
+
+/**
+ * 7 * 3 + 4
+ * 被乘数 * 乘数 + 进位数
+ * @param charI
+ * @param charII
+ * @return
+ */
+int getNumber_0I(char charI, int charII, int num) {
+    int number = 0;
+    int numberI = (int)(charI - '0');
+    number = numberI * charII + num;
+    //取余
+    number = number % 10;
+    return number;
+}
+
+
+/**
+ * 获取进位数
+ * @param charI
+ * @param charII
+ * @return
+ */
+int getNumber10I(char charI, int charII, int num) {
+    int number = 0;
+    int numberI = (int)(charI - '0');
+    number = numberI * charII + num;
+    //取倍数
+    number = number / 10;
+    return number;
+}
+
+/**
+ * 函数功能
+ * 123456789 * 3
+ * @param numberI
+ * @param number
+ * @return
+ */
 string temp01multiplication(string numberI, int number) {
     string results;
     //进位数
     int num = 0;
+    //逆序数
+    numberI = nverseString(numberI);
+    //987654321
     for (int i=0;i<numberI.length();i++) {
+        char c = numberI[i];
+        //结果
+        int temp = getNumber_0I(c, number, num);
+        //进位数
+        num = getNumber10I(c, number, num);
 
-
-
+        results = intToString(temp) + results;
     }
     return results;
 }
@@ -488,19 +536,28 @@ string temp01multiplication(string numberI, int number) {
  * @return
  */
 string multiplication(string numberI, string numberII) {
-    string results;
+    string results = "0";
+
+    string tempNumber;
 
     //剥离位数
     for(int i=0;i<numberII.length();i++) {
         char charNumber = numberII[i];
         int number = charToInt(charNumber);
-        string tempNumber = temp01multiplication(numberI, number);
-
+        tempNumber = temp01multiplication(numberI, number);
+        for (int j=0;j<i;j++) {
+            tempNumber = tempNumber + "0";
+        }
+        cout << tempNumber << endl;
+        results = addNumber(results, tempNumber);
     }
-
-
     return results;
 }
+
+
+// 123456789
+// *   45678
+//------------
 
 
 
@@ -519,7 +576,8 @@ int main() {
     cin >> numberII;
     //操作数据
     //results = addNumber(numberI, numberII);
-    results = subNumber(numberI, numberII);
+    //results = subNumber(numberI, numberII);
+    results = multiplication(numberI, numberII);
     //显示操作结果
     cout << results << endl;
     return 0;
