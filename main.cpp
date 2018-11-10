@@ -38,6 +38,7 @@ bool whoseLonger(string numberI, string numberII) {
 int number(string numberI, string numberII) {
     int number = -1;
     bool key = whoseLonger(numberI, numberII);
+
     if (key) {
         number = numberI.length() - numberII.length();
     } else {
@@ -148,15 +149,22 @@ string addNumber(string numberI, string numberII) {
         strII = numberII;
     }
     // for 循环里 计算
+    //个位数
     int number_0 = 0;
+    //十位数
     int number10 = 0;
+
     char tempI = '0';
     char tempII = '0';
+
     for (int i=strI.length()-1;i>=0;i--) {
+        //获取值
         tempI = strI[i];
         tempII = strII[i];
+        //转化和
         number_0 = getNumber_0(tempI, tempII, number10);
         number10 = getNumber10(tempI, tempII, number10);
+
         results = intToString(number_0) + results;
     }
     results = intToString(number10) + results;
@@ -165,6 +173,18 @@ string addNumber(string numberI, string numberII) {
     //返回
     return results;
 }
+
+
+/*
+ * 01223
+ *  1223
+ *
+ * 60027
+ * 22344
+ *       1
+ *    11
+ *
+ */
 //-------------------------------------------------------------------------- 以上为大数加法
 
 
@@ -235,7 +255,7 @@ bool bigger(string numberI, string numberII) {
     for (int i=0;i<numberI.length();i++) {
         char a = numberI[i];
         char b = numberII[i];
-        cout << a << " " << b << " : ";
+        //cout << a << " " << b << " : ";
         if (big(a, b) == 1) {
             //第一个字符串 大
             returnKey = true;
@@ -254,6 +274,13 @@ bool bigger(string numberI, string numberII) {
 
 /**
  * 比较俩个数的大小
+ * 参数：
+ * 1。 字符串1
+ * 2。 字符串2
+ * 返回值：
+ * bool型数据
+ * 如果1大-> true
+ * 如果2大-> false
  * @param numberI
  * @param numberII
  * @return
@@ -278,6 +305,9 @@ bool whoseBigger(string numberI, string numberII) {
 
 /**
  * 借位
+ * 参数：
+ * char 型数据*2
+ *
  * @param a
  * @param b
  * @return
@@ -313,6 +343,8 @@ int sub(char a, char b) {
     }
     return number;
 }
+
+
 /**
  * 还上借位用去的数
  * @param number
@@ -336,7 +368,6 @@ string nverseString(string str) {
     for (int i=str.length()-1;i>=0;i--) {
         number = number + str[i];
     }
-    //cout << number << endl;
     return number;
 }
 
@@ -350,6 +381,7 @@ string trueSubNumber(string numberI, string numberII) {
     string results ;
     int lengthI = numberI.length();
     int lengthII = numberII.length();
+    //逆序
     numberI = nverseString(numberI);
     numberII = nverseString(numberII);
     //标志借位
@@ -358,7 +390,6 @@ string trueSubNumber(string numberI, string numberII) {
     for (int i=0;i<lengthII; i++) {
         char strI = numberI[i];
         char strII = numberII[i];
-        //cout << strI << " - " << strII;
         //补上 上次 借位的数
         strI = addsub(strI, tempNumber);
         //本次 借位
@@ -368,6 +399,21 @@ string trueSubNumber(string numberI, string numberII) {
     }
     return results;
 }
+
+//  234
+//-  56
+//-------
+//  178
+
+//  432
+//- 650
+//-------
+//  871
+
+
+// 8
+// 78
+// 178
 
 /**
  * 补齐位数
@@ -394,15 +440,16 @@ string subNumber(string numberI, string numberII) {
     string results = "";
     //比较大小
     bool key = whoseBigger(numberI, numberII);
-    cout << "key:" << key << endl;
     //计算
     if (key) {
         //补齐计算
         numberII = fillingString(numberI, numberII);
+        //计算
         results = trueSubNumber(numberI, numberII);
     } else {
         //补齐计算
         numberI = fillingString(numberII, numberI);
+        //计算
         results = trueSubNumber(numberII, numberI);
         //负数
         results = "-" + results;
@@ -410,17 +457,63 @@ string subNumber(string numberI, string numberII) {
     return results;
 }
 
+//---------------------------------------------以上为大数减法
+
+/**
+ * 返回字符的（所表示的）值
+ * @param c
+ * @return
+ */
+int charToInt(char c) {
+    int number = (int) (c - '0');
+    return number;
+}
+
+string temp01multiplication(string numberI, int number) {
+    string results;
+    //进位数
+    int num = 0;
+    for (int i=0;i<numberI.length();i++) {
+
+
+
+    }
+    return results;
+}
+
+/**
+ * 大数乘法
+ * @param numberI
+ * @param numberII
+ * @return
+ */
+string multiplication(string numberI, string numberII) {
+    string results;
+
+    //剥离位数
+    for(int i=0;i<numberII.length();i++) {
+        char charNumber = numberII[i];
+        int number = charToInt(charNumber);
+        string tempNumber = temp01multiplication(numberI, number);
+
+    }
+
+
+    return results;
+}
+
+
 
 /**
  * 主函数
  * @return
  */
 int main() {
-
     //定义数据类型
     string numberI = "";
     string numberII = "";
-    string results = "0";
+
+    string results = "";
     //数据输入
     cin >> numberI;
     cin >> numberII;
