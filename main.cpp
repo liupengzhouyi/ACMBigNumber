@@ -559,6 +559,38 @@ string multiplication(string numberI, string numberII) {
 // *   45678
 //------------
 
+void paluy() {
+    int n = 0;
+    cin >> n;
+    while(n--) {
+        int number[1000];
+        for (int i=0;i<1000;i++) {
+            number[i] = -1;
+        }
+        int num = 0;
+        int sum = 0;
+        cin >> num;
+        for (int i=0;i<num;i++) {
+            int t= 0;
+            cin >> t;
+            number[t] = t;
+        }
+        for (int i=0;i<1000;i++) {
+            if (number[i] != -1) {
+                sum = sum + 1;
+            }
+        }
+        cout << sum << endl;
+        for (int i=0;i<1000;i++) {
+            if (number[i] != -1) {
+                cout << number[i] << " ";
+            }
+        }
+        for (int i=0;i<1000;i++) {
+            number[i] = -1;
+        }
+    }
+}
 
 
 /**
@@ -566,8 +598,10 @@ string multiplication(string numberI, string numberII) {
  * @return
  */
 int main() {
+
+    paluy();
     //定义数据类型
-    string numberI = "";
+    /*string numberI = "";
     string numberII = "";
 
     string results = "";
@@ -579,7 +613,7 @@ int main() {
     //results = subNumber(numberI, numberII);
     results = multiplication(numberI, numberII);
     //显示操作结果
-    cout << results << endl;
+    cout << results << endl;*/
     return 0;
 }
 
