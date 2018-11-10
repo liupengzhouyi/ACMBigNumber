@@ -166,8 +166,94 @@ string addNumber(string numberI, string numberII) {
     return results;
 }
 //-------------------------------------------------------------------------- 以上为大数加法
+
+
 /**
- * 比较来个数的大小
+ * 输入：
+ * 1. 字符串类型的，数字格式的，字符串1
+ * 2。字符串类型的，数字格式的，字符串2
+ * 输出：
+ * 3. int值
+ * 函数功能
+ * 比较俩个字符串的长短
+ * 如果第一个字符串长，--> 返回1
+ * 如果第二个字符串长，--> 返回-1
+ * 如果一样长， --> 返回0
+ * @param numberI
+ * @param numberII
+ * @return
+ */
+int Longer(string numberI, string numberII) {
+    int lengthI = numberI.length();
+    int lengthII = numberII.length();
+    int returnKey = 2;
+    if (lengthI > lengthII) {
+        //第一个长
+        returnKey = 1;
+    } else if (lengthI < lengthII) {
+        //第二个长
+        returnKey = -1;
+    } else if (lengthI == lengthII) {
+        //一样长
+        returnKey = 0;
+    }
+    return returnKey;
+}
+
+/**
+ * 判断俩个字符的大小
+ * 默认 第一个大
+ * 第一个大 ： 1
+ * 第二个大 ： -1
+ * 一样大   ： 0
+ * @param a
+ * @param b
+ * @return
+ */
+int big(char a, char b) {
+    int returnKey = 1;
+    int numberI = (int)(a - '0');
+    int numberII = (int)(b - '0');
+    if (numberI > numberII) {
+        returnKey = 1;
+    } else if (numberI < numberII) {
+        returnKey = -1;
+    } else if (numberI == numberII){
+        returnKey = 0;
+    }
+    return returnKey;
+}
+
+/**
+ * 判断（【俩个】（相同长度的）字符串的）大小
+ * @param numberI
+ * @param numberII
+ * @return
+ */
+bool bigger(string numberI, string numberII) {
+    bool returnKey = true;
+    for (int i=0;i<numberI.length();i++) {
+        char a = numberI[i];
+        char b = numberII[i];
+        cout << a << " " << b << " : ";
+        if (big(a, b) == 1) {
+            //第一个字符串 大
+            returnKey = true;
+            break;
+        } else if (big(a, b) == -1) {
+            //第二个字符串 大
+            returnKey = false;
+            break;
+        } else if (big(a, b) == 0){
+            //一样大，继续判断次高位
+            continue;
+        }
+    }
+    return returnKey;
+}
+
+/**
+ * 比较俩个数的大小
  * @param numberI
  * @param numberII
  * @return
@@ -176,10 +262,82 @@ bool whoseBigger(string numberI, string numberII) {
     //默认第一个比较大
     bool returnKey = true;
     // 1. 长短
-    // 2. 逐位比较
-    //function()
-
+    if(Longer(numberI, numberII) == 1) {
+        //第一个长
+        returnKey = true;
+    } else if (Longer(numberI, numberII) == -1){
+        //第二个长
+        returnKey = false;
+    } else if (Longer(numberI, numberII) == 0){
+        //一样长
+        // 2. 逐位比较
+        returnKey = bigger(numberI, numberII);
+    }
     return returnKey;
+}
+
+/**
+ * 借位
+ * @param a
+ * @param b
+ * @return
+ */
+int borrow(char a, char b) {
+    int number = 0;
+    int numberI = (int) (a - '0');
+    int numberII = (int) (b - '0');
+    if (numberI >= numberII) {
+        number = 0;
+    } else {
+        number = 1;
+    }
+    return number;
+}
+
+
+/**
+ * 计算减法的中间步骤
+ * 计算俩个位数的差值
+ * @param a
+ * @param b
+ * @return
+ */
+int sub(char a, char b) {
+    int number = 0;
+    int numberI = (int) (a - '0');
+    int numberII = (int) (b - '0');
+    if (numberI >= numberII) {
+        number = numberI - numberII;
+    } else {
+        number = numberI + 10 - numberII;
+    }
+    return number;
+}
+/**
+ * 还上借位用去的数
+ * @param number
+ * @param borrow
+ * @return
+ */
+char addsub(char number, int borrow) {
+    int num = (int)(number - '0');
+    num = num - borrow;
+    char charNumber = (char)(num + '0');
+    return charNumber;
+}
+
+/**
+ * 返回一个字符串的逆序
+ * @param str
+ * @return
+ */
+string nverseString(string str) {
+    string number = "";
+    for (int i=str.length()-1;i>=0;i--) {
+        number = number + str[i];
+    }
+    //cout << number << endl;
+    return number;
 }
 
 /**
@@ -189,9 +347,42 @@ bool whoseBigger(string numberI, string numberII) {
  * @return
  */
 string trueSubNumber(string numberI, string numberII) {
-
+    string results ;
+    int lengthI = numberI.length();
+    int lengthII = numberII.length();
+    numberI = nverseString(numberI);
+    numberII = nverseString(numberII);
+    //标志借位
+    int tempNumber = 0;
+    int temp = 0;
+    for (int i=0;i<lengthII; i++) {
+        char strI = numberI[i];
+        char strII = numberII[i];
+        //cout << strI << " - " << strII;
+        //补上 上次 借位的数
+        strI = addsub(strI, tempNumber);
+        //本次 借位
+        tempNumber = borrow(strI, strII);
+        temp = sub(strI, strII);
+        results = intToString(temp) + results;
+    }
+    return results;
 }
 
+/**
+ * 补齐位数
+ * @param numberI
+ * @param numberII
+ * @return
+ */
+string fillingString(string numberI, string numberII) {
+    int longthI = numberI.length();
+    int longthII = numberII.length();
+    for (int i=0;i<longthI - longthII;i++) {
+        numberII = "0" + numberII;
+    }
+    return numberII;
+}
 
 /**
  * 计算俩个大数的差
@@ -203,11 +394,18 @@ string subNumber(string numberI, string numberII) {
     string results = "";
     //比较大小
     bool key = whoseBigger(numberI, numberII);
+    cout << "key:" << key << endl;
     //计算
     if (key) {
+        //补齐计算
+        numberII = fillingString(numberI, numberII);
         results = trueSubNumber(numberI, numberII);
     } else {
+        //补齐计算
+        numberI = fillingString(numberII, numberI);
         results = trueSubNumber(numberII, numberI);
+        //负数
+        results = "-" + results;
     }
     return results;
 }
@@ -227,7 +425,8 @@ int main() {
     cin >> numberI;
     cin >> numberII;
     //操作数据
-    results = addNumber(numberI, numberII);
+    //results = addNumber(numberI, numberII);
+    results = subNumber(numberI, numberII);
     //显示操作结果
     cout << results << endl;
     return 0;
