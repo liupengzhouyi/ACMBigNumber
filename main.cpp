@@ -548,7 +548,7 @@ string multiplication(string numberI, string numberII) {
         for (int j=0;j<i;j++) {
             tempNumber = tempNumber + "0";
         }
-        cout << tempNumber << endl;
+        //cout << tempNumber << endl;
         results = addNumber(results, tempNumber);
     }
     return results;
@@ -593,27 +593,210 @@ void paluy() {
 }
 
 
+
+int getString3(double number) {
+    number = number * 100;
+
+    int a = (int)number % 100;
+
+    //cout << a << endl;
+
+    return a;
+
+}
+
+int getString2(double number) {
+    double a = (int)number % 1;
+    a = number - a;
+    return a;
+}
+
+int addSomething(int a) {
+    int key = 0;
+    if (a >0 && a < 10) {
+        key = 1;
+    } else if (a == 0) {
+        key = -1;
+    }
+    return key;
+}
+
+string sun0(string a) {
+    string s = "";
+    while(a[0] != '0') {
+        for (int i=1;i<a.length();i++) {
+            s = s + a[i];
+        }
+        a = s;
+    }
+    s = a;
+    return s;
+}
+
+int bbb(char a, char b) {
+    int key = false;
+    if (a > b) {
+        key = 1;
+    } else if (a < b) {
+        key = -1;
+    } else if (a == b){
+        key = 0;
+    }
+    return key;
+}
+
+
+bool wbig(string a, string b) {
+    bool key = false;
+    int numberI = a.length();
+    int numberII = b.length();
+    if (numberI > numberII) {
+        for (int i=0;i<numberI ; i++) {
+            char aa = a[i];
+            char bb = b[i];
+            int key1 = bbb(aa, bb);
+            if (key1 == 1) {
+                key = true;
+                break;
+            } else if (key1 == -1){
+                key = false;
+                break;
+            } else if (key1 == 0) {
+                continue;
+            }
+        }
+    } else {
+        for (int i=0;i<numberII ;i++) {
+            char aa = a[i];
+            char bb = b[i];
+            int key1 = bbb(aa, bb);
+            if (key1 == 1) {
+                key = true;
+                break;
+            } else if (key1 == -1){
+                key = false;
+                break;
+            } else if (key1 == 0) {
+                continue;
+            }
+        }
+    }
+    return key;
+}
+
+
+int findP(string n) {
+    bool key = false;
+    int m=0;
+    for (int i=0;i<n.length();i++) {
+        if (key == true) {
+            m = m + 1;
+        }
+        if (n[i] == '.') {
+            key = true;
+        }
+    }
+    return m;
+}
+
+
+string sunP(string n) {
+    string s = "";
+    for (int i=0;i<n.length();i++) {
+        if (n[i] != '.') {
+            s = s + n[i];
+        }
+    }
+    return s;
+}
+
+string subaaa(string str, int a) {
+    int l = str.length();
+    int num = l - a;
+    string string1 = "";
+    for (int i=0;i<str.length();i++) {
+        if (i == num) {
+            string1 = string1 + ".";
+        }
+        string1 = string1 + str[i];
+    }
+    return string1;
+}
+
+string sss(string string1) {
+    bool key = true;
+    string s = "";
+    for (int i=0;i<string1.length();i++) {
+        if (string1[i] != '0') {
+            key = false;
+        }
+
+        if (key == false) {
+            s = s + string1[i];
+        }
+    }
+    return s;
+}
+
+
 /**
  * 主函数
  * @return
  */
 int main() {
 
-    paluy();
-    //定义数据类型
-    /*string numberI = "";
-    string numberII = "";
+    index02();
 
-    string results = "";
-    //数据输入
-    cin >> numberI;
-    cin >> numberII;
-    //操作数据
-    //results = addNumber(numberI, numberII);
-    //results = subNumber(numberI, numberII);
-    results = multiplication(numberI, numberII);
-    //显示操作结果
-    cout << results << endl;*/
+
     return 0;
 }
+
+
+
+
+
+
+
+
+/*
+double number1[12];
+
+while(cin >> number1[0]) {
+for (int i=1;i<12;i++) {
+cin >> number1[i];
+}
+
+double sum = 0;
+
+for (int i=0;i<12;i++) {
+sum = sum + number1[i];
+}
+sum = sum /12;
+*/
+
+//cout << "$" << getString2(sum) << "." << getString3(sum) << endl;
+
+/*//cout << sum << endl;
+int key = addSomething(getString3(sum));
+if (key == 1) {
+    cout << "$" << getString2(sum) << "." << getString3(sum) << "0" << endl;
+} else if (key == -1) {
+    cout << "$" << getString2(sum) << "." << " 00" << endl;
+}else if (key == 0){
+    cout << "$" << getString2(sum) << "." << getString3(sum) << endl;
+}*/
+
+//cout << sum << endl;
+/*
+int key = addSomething(getString3(sum));
+if (key == 1) {
+cout << "$" << getString2(sum) << "." << getString3(sum) << endl;
+} else if (key == -1) {
+cout << "$" << getString2(sum) << endl;
+}else if (key == 0){
+cout << "$" << getString2(sum) << "." << getString3(sum) << endl;
+}
+
+}
+*/
 
